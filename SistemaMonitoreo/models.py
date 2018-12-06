@@ -5,6 +5,7 @@ from django.db import models
 from mptt.models import MPTTModel
 from django.contrib import admin
 from model_utils import Choices
+from django.contrib.auth.models import User
 
 
 
@@ -16,10 +17,12 @@ class Ubicacion(MPTTModel):
     nombre = models.TextField(null=False, blank=True)
     direccion = models.TextField(null=False, blank=True)
     fecha_inicio_operaciones = models.DateTimeField
+    
     def __unicode__(self):
-        return self.description
+        return self.nombre
+    
     class Meta:
-        verbose_name = 'una Ubicacion'
+        verbose_name = 'Una Ubicacion'
         verbose_name_plural = 'Ubicaciones'
 
 class Insumo(models.Model):
@@ -45,14 +48,14 @@ class Actividad(models.Model):
 
 class TipoDocumento(models.Model):
     nombre = models.CharField(max_length=30, null=False, blank=True)
-    descripcion = models.CharField(max_length=30, null=True, blank=True)
+    descripcion = models.CharField(max_length=100, null=True, blank=True)
     aplica_alerta = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.description
+        return self.descripcion
 
     class Meta:
-        verbose_name = 'Un tipo de documento'
+        verbose_name = 'Tipo de documento'
         verbose_name_plural = 'Tipos de documentos'
 
 class Multimedia(models.Model):
@@ -63,11 +66,19 @@ class Multimedia(models.Model):
 class Aptitudes(models.Model):
     titulo = models.CharField(max_length=30, null=False, blank=True)
     descripcion = models.TextField(null=False, blank=True)
+    
+    def __unicode__(self):
+        return self.titulo
+    
+    class Meta:
+        verbose_name = 'Aptitud'
+        verbose_name_plural = 'Aptitudes'
 
 class Empleado(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     documentos = models.ManyToManyField(Multimedia)
     aptitudes = models.ManyToManyField(Aptitudes)
-    empresa = models.ForeignKey(Ubicacion, on_delete=models.CASCADE)
+    empresa = models.ManyToManyField(Ubicacion)
     nombre = models.CharField(max_length=30, null=False, blank=True)
     apellido1 = models.CharField(max_length=30, null=False, blank=True)
     apellido2 = models.CharField(max_length=30, null=False, blank=True)
@@ -94,3 +105,4 @@ class Bitacora(models.Model):
 admin.site.register(TipoDocumento)
 admin.site.register(Ubicacion)
 admin.site.register(Empleado)
+admin.site.register(Aptitudes)
