@@ -62,6 +62,12 @@ class Multimedia(models.Model):
     fecha_captura = models.DateField
     fecha_fin_vigencia = models.DateField
     id_tipo_documento = models.ForeignKey(TipoDocumento, on_delete= models.CASCADE )
+    documento = models.FileField(null=True)
+    def __unicode__(self):
+        return self.documento.name
+    class Meta:
+        verbose_name = 'un documento'
+        verbose_name_plural = 'documentos'
 
 class Aptitudes(models.Model):
     titulo = models.CharField(max_length=30, null=False, blank=True)
@@ -93,6 +99,13 @@ class Empleado(models.Model):
     telefono1 = models.CharField(max_length=30, null=False, blank=True)
     telefono2 = models.CharField(max_length=30, null=False, blank=True)
 
+    def __unicode__(self):
+        return self.nomber + " " + apellido1 + " " + apellido2
+    
+    class Meta:
+        verbose_name = 'un empleado'
+        verbose_name_plural = 'Empleados'
+
 class Bitacora(models.Model):
     fecha_hora_inicio = models.DateTimeField()
     fecha_hora_fin = models.DateTimeField()
@@ -106,3 +119,4 @@ admin.site.register(TipoDocumento)
 admin.site.register(Ubicacion)
 admin.site.register(Empleado)
 admin.site.register(Aptitudes)
+admin.site.register(Multimedia)
