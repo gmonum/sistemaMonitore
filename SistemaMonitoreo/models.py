@@ -22,8 +22,8 @@ class Ubicacion(MPTTModel):
         return self.nombre
     
     class Meta:
-        verbose_name = 'Una Ubicacion'
-        verbose_name_plural = 'Ubicaciones'
+        verbose_name = 'una Ubicacion'
+        verbose_name_plural = 'ubicaciones'
 
 class Insumo(models.Model):
     empresa = models.ForeignKey(Ubicacion,null=False)
@@ -38,8 +38,8 @@ class Insumo(models.Model):
         return self.description
 
     class Meta:
-        verbose_name = 'un Insumo'
-        verbose_name_plural = 'Insumos'
+        verbose_name = 'un insumo'
+        verbose_name_plural = 'insumos'
 
 class Actividad(models.Model):
     cantidad_insumo = models.IntegerField
@@ -55,8 +55,8 @@ class TipoDocumento(models.Model):
         return self.descripcion
 
     class Meta:
-        verbose_name = 'Tipo de documento'
-        verbose_name_plural = 'Tipos de documentos'
+        verbose_name = 'un tipo de documento'
+        verbose_name_plural = 'tipos de documentos'
 
 class Multimedia(models.Model):
     fecha_captura = models.DateField
@@ -77,7 +77,7 @@ class Aptitudes(models.Model):
         return self.titulo
     
     class Meta:
-        verbose_name = 'Aptitud'
+        verbose_name = 'una Aptitud'
         verbose_name_plural = 'Aptitudes'
 
 class Empleado(models.Model):
@@ -88,8 +88,8 @@ class Empleado(models.Model):
     nombre = models.CharField(max_length=30, null=False, blank=True)
     apellido1 = models.CharField(max_length=30, null=False, blank=True)
     apellido2 = models.CharField(max_length=30, null=False, blank=True)
-    SEXO = Choices('Elije' , 'Feminino', 'Masculino')
-    sexo = models.CharField(choices=SEXO, max_length=30, null=True, default='Elije')
+    SEXO = Choices('Elije una opción' , 'Feminino', 'Masculino')
+    sexo = models.CharField(choices=SEXO, max_length=30, null=True, default='Elije una opción')
     domicilio = models.CharField(max_length=100, null=False, blank=True)
     rfc = models.CharField(max_length=30, null=False, blank=True)
     curp = models.CharField(max_length=30, null=False, blank=True)
@@ -100,11 +100,11 @@ class Empleado(models.Model):
     telefono2 = models.CharField(max_length=30, null=False, blank=True)
 
     def __unicode__(self):
-        return self.nomber + " " + apellido1 + " " + apellido2
+        return self.nombre + " " + self.apellido1 + " " + self.apellido2
     
     class Meta:
         verbose_name = 'un empleado'
-        verbose_name_plural = 'Empleados'
+        verbose_name_plural = 'empleados'
 
 class Bitacora(models.Model):
     fecha_hora_inicio = models.DateTimeField()
