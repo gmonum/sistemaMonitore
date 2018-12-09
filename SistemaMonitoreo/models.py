@@ -6,6 +6,8 @@ from mptt.models import MPTTModel
 from django.contrib import admin
 from model_utils import Choices
 from django.contrib.auth.models import User
+from datetime import datetime
+
 
 
 
@@ -81,7 +83,13 @@ class Aptitudes(models.Model):
         verbose_name_plural = 'Aptitudes'
 
 class Empleado(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        null=True, 
+        limit_choices_to={'is_staff': False },
+        verbose_name="usuario del sistema",
+    )
     documentos = models.ManyToManyField(Multimedia)
     aptitudes = models.ManyToManyField(Aptitudes)
     empresa = models.ManyToManyField(Ubicacion)
@@ -91,10 +99,10 @@ class Empleado(models.Model):
     SEXO = Choices('Elije una opción' , 'Feminino', 'Masculino')
     sexo = models.CharField(choices=SEXO, max_length=30, null=True, default='Elije una opción')
     domicilio = models.CharField(max_length=100, null=False, blank=True)
-    rfc = models.CharField(max_length=30, null=False, blank=True)
-    curp = models.CharField(max_length=30, null=False, blank=True)
-    fecha_ingreso = models.DateField
-    fecha_nacimiento = models.DateField
+    rfc = models.CharField(max_length=13, null=False, blank=True)
+    curp = models.CharField(max_length=18, null=False, blank=True)
+    fecha_ingreso = models.DateField(default=datetime.now, blank=True)
+    fecha_nacimiento = models.DateField(null=True, blank=True)
     celular = models.CharField(max_length=30, null=False, blank=True)
     telefono1 = models.CharField(max_length=30, null=False, blank=True)
     telefono2 = models.CharField(max_length=30, null=False, blank=True)
@@ -115,8 +123,3 @@ class Bitacora(models.Model):
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
 
 
-admin.site.register(TipoDocumento)
-admin.site.register(Ubicacion)
-admin.site.register(Empleado)
-admin.site.register(Aptitudes)
-admin.site.register(Multimedia)
