@@ -52,7 +52,7 @@ class TipoDocumento(models.Model):
     aplica_alerta = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.descripcion
+        return self.nombre
 
     class Meta:
         verbose_name = 'un tipo de documento'

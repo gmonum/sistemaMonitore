@@ -55,7 +55,9 @@ ROOT_URLCONF = 'SysMon.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+	'static/templates',
+	],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -92,7 +94,7 @@ DATABASES = {
 # In the flexible environment, you connect to CloudSQL using a unix socket.
 # Locally, you can use the CloudSQL proxy to proxy a localhost connection
 # to the instance
-DATABASES['default']['HOST'] = '/cloudsql/sistema-monitoreo-rrr:us-west2:sistemamonitoreodbrrr'
+DATABASES['default']['HOST'] = '/cloudsql/sistema-monitoreo-rrr:us-west2:sistemamonitoreorrrdb'
 if os.getenv('GAE_INSTANCE'):
     pass
 else:
