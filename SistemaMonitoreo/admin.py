@@ -23,6 +23,7 @@ class EmpleadoAdmin(admin.ModelAdmin):
 @admin.register(Actividad)
 class ActividadAdmin(admin.ModelAdmin):
     save_on_top = True
+    filter_horizontal=['insumo']
     fields=['nombre_actividad',
         'insumo', 
         'cantidad_insumo'
@@ -38,6 +39,7 @@ class InsumoAdmin(admin.ModelAdmin):
         'fecha_ultimo_abastecimiento',
         'stock_actual'
     ]
+    
     
     
 #Registros

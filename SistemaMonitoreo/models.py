@@ -48,7 +48,7 @@ class Actividad(models.Model):
     insumo = models.ManyToManyField(Insumo)
     
     def __unicode__(self):
-        return self.description
+        return self.nombre_actividad
 
     class Meta:
         verbose_name = 'una actividad'
