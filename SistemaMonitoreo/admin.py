@@ -27,6 +27,17 @@ class ActividadAdmin(admin.ModelAdmin):
         'insumo', 
         'cantidad_insumo'
     ]
+
+@admin.register(Insumo)
+class InsumoAdmin(admin.ModelAdmin):
+    save_on_top = True
+    fields=['nombre',
+        'empresa', 
+        'stock_maximo',
+        'stock_minimo',
+        'fecha_ultimo_abastecimiento',
+        'stock_actual'
+    ]
     
     
 #Registros
@@ -34,4 +45,3 @@ admin.site.register(TipoDocumento)
 admin.site.register(Ubicacion)
 admin.site.register(Aptitudes)
 admin.site.register(Multimedia)
-admin.site.register(Insumo)
