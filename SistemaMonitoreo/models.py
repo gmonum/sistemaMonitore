@@ -29,7 +29,6 @@ class Ubicacion(MPTTModel):
 
 class Insumo(models.Model):
     empresa = models.ForeignKey(Ubicacion,null=False)
-    descripcion = models.CharField(max_length=30, null=False, blank=True)
     stock_maximo = models.FloatField(null=False,  default=0.0)
     stock_minimo = models.FloatField(null=False,  default=0.0)
     nombre = models.CharField(max_length=30, null=False, blank=True)
@@ -37,7 +36,7 @@ class Insumo(models.Model):
     stock_actual = models.FloatField(null=False, default=0.0)
 
     def __unicode__(self):
-        return self.description
+        return self.nombre
 
     class Meta:
         verbose_name = 'un insumo'
