@@ -44,8 +44,16 @@ class Insumo(models.Model):
         verbose_name_plural = 'insumos'
 
 class Actividad(models.Model):
-    cantidad_insumo = models.IntegerField
+    nombre_actividad = models.CharField(max_length=50, null=False, blank=True)
+    cantidad_insumo = models.IntegerField(null=True)
     insumo = models.ManyToManyField(Insumo)
+    
+    def __unicode__(self):
+        return self.description
+
+    class Meta:
+        verbose_name = 'una actividad'
+        verbose_name_plural = 'actividades'
 
 
 class TipoDocumento(models.Model):
