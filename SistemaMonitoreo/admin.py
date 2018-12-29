@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from .models import Empleado, TipoDocumento, Ubicacion, Aptitudes, Multimedia, Actividad
+from .models import Empleado, TipoDocumento, Ubicacion, Aptitudes, Multimedia, Actividad, Insumo
 
 
 @admin.register(Empleado)
@@ -19,11 +19,19 @@ class EmpleadoAdmin(admin.ModelAdmin):
     	'documentos'
     ]
     
-   
-
+    
+@admin.register(Actividad)
+class ActividadAdmin(admin.ModelAdmin):
+    save_on_top = True
+    fields=['nombre_actividad',
+        'insumo', 
+        'cantidad_insumo'
+    ]
+    
+    
 #Registros
 admin.site.register(TipoDocumento)
 admin.site.register(Ubicacion)
 admin.site.register(Aptitudes)
 admin.site.register(Multimedia)
-admin.site.register(Actividad)
+admin.site.register(Insumo)
