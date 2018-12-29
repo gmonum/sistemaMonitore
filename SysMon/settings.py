@@ -177,6 +177,7 @@ STATIC_ROOT = "/static/"
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'multimediasistemamonitoreorrr'
 
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     'static',
