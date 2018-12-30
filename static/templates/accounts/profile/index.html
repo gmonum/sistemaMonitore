@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="_csrf" content="${_csrf.token}"/>
+	<!-- default header name is X-CSRF-TOKEN -->
+	<meta name="_csrf_header" content="${_csrf.headerName}"/>
+		<style type="text/css">		
+		*
+		{
+		  color: #fff;
+		  font-size: 28px;
+		  font-weight: 300;
+		  box-sizing: border-box;
+		  font-family: 'Metrophobic', Arial, serif; font-weight: 400;
+		}
+		
+		body {
+					font-family: Arial;
+					background-color: #3498DB;
+					padding: 50px;
+					}
+		
+		header,
+		nav,
+		section,
+		aside,
+		footer
+		{
+		  text-align: center;
+		  background-color: #C73030;
+		  border-radius: 5px;
+		  padding: 50px;
+		}
+		
+		header,
+		nav,
+		footer
+		{
+		  width: 100%;
+		  padding: 50px;
+		}
+		
+		header
+		{
+		  margin-bottom: 50px;
+		}
+		
+		h1
+		{
+		  margin: 0;
+		}
+		
+		nav,
+		aside
+		{
+		  width: 25%;
+		}
+		
+		section
+		{
+		  float: center;
+		  width: calc(100% - 100px);
+		  margin: 50px 150px 150px 50px;
+		}
+		
+		section header,
+		section article,
+		section footer
+		{
+		  width: 100%;
+		  background-color: #999999;
+		  border-radius: 5px;
+		  margin: 0;
+		  padding: 50px;
+		}
+		
+		section article
+		{
+		  margin: 25px 0;
+		}
+		
+		nav
+		{
+		  float: left;
+		}
+		
+		aside
+		{
+		  float: right;
+		}
+		
+		nav ul
+		{
+		  list-style-type: none;
+		  padding: 0;
+		  margin-bottom: 0;
+		}
+		
+		nav li
+		{
+		  display: inline-block;
+		  margin: 0 0 0 1px;
+		  width: 100px;
+		}
+		
+		nav li:first-child
+		{
+		  margin-left: 0;
+		}
+		
+		footer
+		{
+		  clear: both;
+		}
+		</style>
+	<meta charset="ISO-8859-1">
+  	<title>Menu Principal - SOSELIMEX</title>
+</head>
+<body class="hello">
+  <header>
+    <h1>SOSELIMEX</h1>
+  </header>
+  
+  <section>
+    
+    <header>MENU PRINCIPAL</header>
+    <article><a href="/capturaActividades">Monitor de Actividades</a></article>
+    
+    <footer><a href='/logout'>SALIR</a></footer>
+  </section>
+ 
+  <footer>Av. Reforma 222 Edif. 1 Piso 1 Oficina 100</footer>
+</body>
+</html>
