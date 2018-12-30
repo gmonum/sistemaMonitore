@@ -15,7 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.views import login
+from django.contrib.auth.views import logout
+
+from SistemaMonitoreo import views
+
 
 urlpatterns = [
+   url(r'^$', views.home),
     url(r'^admin/', admin.site.urls),
+    url(r'^login/$', login, name='login/'),
+    url(r'^logout/$', logout, name='logout/'),
+    url(r'^accounts/profile/$', views.user_profile),
+    url(r'^capturaActividades/', views.duty_record),
+    
 ]
