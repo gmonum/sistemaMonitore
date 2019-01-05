@@ -123,7 +123,7 @@ class Empleado(models.Model):
 
 class Bitacora(models.Model):
     fecha_hora_inicio = models.DateTimeField()
-    fecha_hora_fin = models.DateTimeField()
+    fecha_hora_fin = models.DateTimeField(null=True, blank=True)
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE)
     actividades = models.ManyToManyField(Actividad)
     evidencias = models.ManyToManyField(Multimedia)
