@@ -20,7 +20,7 @@ class Ubicacion(MPTTModel):
     direccion = models.TextField(null=False, blank=True)
     fecha_inicio_operaciones = models.DateTimeField
     
-    def __unicode__(self):
+    def __str__(self):
         return self.nombre
     
     class Meta:
@@ -35,7 +35,7 @@ class Insumo(models.Model):
     fecha_ultimo_abastecimiento = models.DateTimeField(null=True)
     stock_actual = models.FloatField(null=False, default=0.0)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nombre
 
     class Meta:
@@ -47,7 +47,7 @@ class Actividad(models.Model):
     cantidad_insumo = models.IntegerField(null=True)
     insumo = models.ManyToManyField(Insumo)
     
-    def __unicode__(self):
+    def __str__(self):
         return self.nombre_actividad
 
     class Meta:
@@ -60,7 +60,7 @@ class TipoDocumento(models.Model):
     descripcion = models.CharField(max_length=100, null=True, blank=True)
     aplica_alerta = models.BooleanField(default=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nombre
 
     class Meta:
@@ -71,9 +71,18 @@ class Multimedia(models.Model):
     fecha_captura = models.DateField
     fecha_fin_vigencia = models.DateField
     id_tipo_documento = models.ForeignKey(TipoDocumento, on_delete= models.CASCADE )
-    documento = models.FileField(null=True)
-    def __unicode__(self):
+    documento = models.FileField(null=True,upload_to="documentos/")
+
+    def file_link(self):
+        if self.documento:
+            return "<a href='%s'>descargar</a>" % (self.documento.url,)
+        else:
+            return "Sin documento adjunto"
+
+    def __str__(self):
         return self.documento.name
+
+
     class Meta:
         verbose_name = 'un documento'
         verbose_name_plural = 'documentos'
@@ -81,10 +90,10 @@ class Multimedia(models.Model):
 class Aptitudes(models.Model):
     titulo = models.CharField(max_length=30, null=False, blank=True)
     descripcion = models.TextField(null=False, blank=True)
-    
-    def __unicode__(self):
+
+    def __str__(self):
         return self.titulo
-    
+
     class Meta:
         verbose_name = 'una Aptitud'
         verbose_name_plural = 'Aptitudes'
@@ -114,9 +123,10 @@ class Empleado(models.Model):
     telefono1 = models.CharField(max_length=30, null=False, blank=True)
     telefono2 = models.CharField(max_length=30, null=False, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nombre + " " + self.apellido1 + " " + self.apellido2
     
+
     class Meta:
         verbose_name = 'un empleado'
         verbose_name_plural = 'empleados'

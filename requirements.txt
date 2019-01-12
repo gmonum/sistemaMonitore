@@ -6,3 +6,4 @@ psycopg2-binary==2.7.6.1
 django-mptt==0.9.1
 django-model-utils==3.1.2
 django-storages[google]
+Pillow==5.3.0

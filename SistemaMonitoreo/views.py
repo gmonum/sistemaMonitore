@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect, response
 from django.core.urlresolvers import reverse
 from django.template.response import TemplateResponse
 from django.contrib.auth.models import User
-from models import Bitacora, Ubicacion, Empleado
+from SistemaMonitoreo.models import Bitacora, Ubicacion, Empleado
 import logging
 import os
 
