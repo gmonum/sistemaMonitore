@@ -22,11 +22,14 @@ from SistemaMonitoreo import views
 
 
 urlpatterns = [
-   url(r'^$', views.home),
+    url(r'^$', views.home),
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', login, name='login/'),
     url(r'^logout/$', logout, name='logout/'),
     url(r'^accounts/profile/$', views.user_profile),
     url(r'^capturaActividades/', views.duty_record),
+    url(r'^guardaActividad/submit/(?P<id>\d+)/$', views.save_update_activity),
+    url(r'^listadoActividades/', views.listado_actividades),
+    url(r'^finalizaActividad/(?P<id>\d+)/$', views.save_update_activity)
     
 ]
