@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta name="_csrf" content="${_csrf.token}"/>
+	<!-- default header name is X-CSRF-TOKEN -->
+	<meta name="_csrf_header" content="${_csrf.headerName}"/>
+		
+		
+		<style type="text/css">		
+		*		
+		
+		html,body {
+		  width: 100%;
+		  height: 100%;
+		}
+		
+		body {
+					font-family: Arial;
+					background-color: #3498DB;
+					padding: 50px;
+					text-align: center;
+					}
+					
+		* {
+		box-sizing: border-box;
+		}
+		
+		.rolldown-list {
+		  text-align: center;
+		  padding: 0;
+		  margin: 0;
+		}
+		
+		.rolldown-list li {
+		  padding: 1em;
+		  margin-bottom: .125em;
+		  display: block;
+		  list-style: none;
+		  text-transform: uppercase;
+		}
+		
+		.rolldown-list li {
+		  visibility: hidden;
+		  animation: rolldown .7s 1;
+		  transform-origin: 50% 0;
+		  animation-fill-mode: forwards;
+		}
+		
+		.rolldown-list li:nth-child(2n) {
+		  background-color: #C73030;
+		}
+		
+		.rolldown-list li:nth-child(2n+1) {
+		  background-color: #C73030;
+		}
+		
+		#myList {
+		  position: absolute;
+		  width: 50%; 
+		  left: 50%;
+		  margin-left: -25%;
+		}
+		
+		#btnReload {
+		  float: left;
+		  color: #333;
+		  background: #ccc;
+		  text-transform: uppercase;
+		  border: none;
+		  padding: .5em 1em;
+		}
+		
+		#btnReload:hover {
+		  background: #ddd;
+		}
+		
+		@keyframes rolldown {
+		  0% {
+		    visibility: visible;
+		    transform: rotateX(180deg) perspective(500px);
+		  }
+		  70% {
+		    visibility: visible;
+		    transform: rotateX(-20deg);
+		  }
+		  100% {
+		    visibility: visible;
+		    transform: rotateX(0deg);
+		  }
+		}
+		
+		</style>
+		
+		<script type="text/javascript">
+
+		// Increments the delay on each item.
+		$('.rolldown-list li').each(function () {
+		  var delay = ($(this).index() / 4) + 's';
+		  $(this).css({
+		    webkitAnimationDelay: delay,
+		    mozAnimationDelay: delay,
+		    animationDelay: delay
+		  });
+		});
+	
+		$('#btnReload').click(function () {
+		  $('#myList').removeClass('rolldown-list');
+		  setTimeout(function () {
+		    $('#myList').addClass('rolldown-list');
+		  }, 1);
+		});	
+		
+		</script>
+	
+	<meta charset="UTF-8">
+  	
+	<title>Listado de Bitacora</title>
+</head>
+<body>
+	
+	<h1>Actividades por finalizar</h1>
+	
+	<ul class="rolldown-list" id="myList">
+		{% for st in bitacora %}
+			<li value="{{ st.pk }}" >
+			<a href="/finalizaActividad/{{ st.pk }}/">ID: {{ st.pk }} - Fecha inicio: {{st.fecha_hora_inicio }} HRS</a>
+			</li>
+			<br>
+		{% endfor %}
+	</ul>
+	<a href="/">
+		<button id="btnReload">REGRESAR</button>
+	</a>
+	
+</body>
+</html>

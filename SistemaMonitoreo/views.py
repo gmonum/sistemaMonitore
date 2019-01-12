@@ -123,19 +123,7 @@ def duty_record_fin(request, id):
          logger.info('El id que mandaron es: ' + id)
          return HttpResponse('HELLO WORLD')
 
-     
 
-#def save_activity(request, user):
-#
-#     bitacora = Bitacora()
-#     bitacora.object_pk = 4
-#     bitacora.fecha_hora_inicio = '2018-12-28 01:30:18.280834-06'
-#     bitacora.fecha_hora_fin = '2018-12-28 03:30:18.280834-06'
-#     bitacora.ubicacion = Ubicacion.objects.get(id='1')
-#     bitacora.empleado = Empleado.objects.get(id='2')
-#     bitacora.save()
-#     logger.info(bitacora)
-#     logger.info('Elemento Bitacora guardado')
      
      
     
