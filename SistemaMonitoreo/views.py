@@ -8,6 +8,7 @@ from django.template import RequestContext
 from django.template.response import TemplateResponse
 from django.contrib.auth.models import User
 from SistemaMonitoreo.models import Bitacora, Ubicacion, Empleado, Actividad
+from SistemaMonitoreo.forms import BitacoraForm
 from django.utils import timezone
 import logging
 import os
@@ -42,6 +43,7 @@ def user_profile(request):
 
 def duty_record(request):
      logger = logging.getLogger('SistemaMonitoreo')
+     form = BitacoraForm(request.POST, request.FILES)
      if not '_auth_user_id' in request.session:
          return HttpResponseRedirect('/login')
      else:
@@ -49,12 +51,29 @@ def duty_record(request):
          logger.info(empl_id)
          emp_ubicacion = Empleado.objects.get(user_id=request.session['_auth_user_id']).empresa
          return render(request, 'record/activities/index.html',
-                                    {'actividades': Actividad.objects.all(),
-                                     'ubicaciones': emp_ubicacion.all()})
+                                    {
+                                    'form':form,
+                                    'actividades': Actividad.objects.all(),
+                                    'ubicaciones': Ubicacion.objects.all()})
          #return TemplateResponse(request, 'record/activities/index.html', '')
-
+def duty_record2(request):
+     logger = logging.getLogger('SistemaMonitoreo')
+     form = BitacoraForm(request.POST, request.FILES)
+     if not '_auth_user_id' in request.session:
+         return HttpResponseRedirect('/login')
+     else:
+         empl_id = Empleado.objects.get(user_id=request.session['_auth_user_id']).id
+         logger.info(empl_id)
+         emp_ubicacion = Empleado.objects.get(user_id=request.session['_auth_user_id']).empresa
+         return render(request, 'record/activities/actividad.html',
+                                    {
+                                    'form':form,
+                                    'actividades': Actividad.objects.all(),
+                                    'nodes': Ubicacion.objects.get(pk=1).get_leafnodes() })
+         #return TemplateResponse(request, 'record/activities/index.html', '')
 def save_update_activity(request, id):
      logger = logging.getLogger('SistemaMonitoreo')
+     
      
      logger.info('El id ingresado es: ' + id.__str__())
      
