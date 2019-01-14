@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^capturaActividades/', views.duty_record),
     url(r'^guardaActividad/submit/(?P<id>\d+)/$', views.save_update_activity),
     url(r'^listadoActividades/', views.listado_actividades),
-    url(r'^finalizaActividad/(?P<id>\d+)/$', views.save_update_activity)
-    
+    url(r'^finalizaActividad/(?P<id>\d+)/$', views.save_update_activity),
+    url(r'^iniciaActividad/', views.duty_record2),
+       
 ]
