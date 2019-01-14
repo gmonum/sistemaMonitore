@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="es">
+    <head>
+            <!-- {% load static %} -->
+        <title>SOSELIMEX</title>
+        <link rel="shortcut icon" href="{% get_static_prefix %}img/icono.ico" type="image/x-icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="{% get_static_prefix %}css/reset.css">
+        <link rel="stylesheet" type="text/css" href="{% get_static_prefix %}css/styles.css">
+        <link rel="stylesheet" type="text/css" href="{% get_static_prefix %}css/jquery.crossSelect.css">
+        <link type="text/css" href="{% get_static_prefix %}cssjs/blitzer/jquery-ui-1.8.10.custom.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="{% get_static_prefix %}js/jquery.treeview/jquery.treeview.css" type="text/css" />
+        <script type="text/javascript" src="{% get_static_prefix %}js/jquery-1.4.4.min.js"></script>
+        <script type="text/javascript" src="{% get_static_prefix %}js/jquery-ui-1.8.10.custom.min.js"></script>
+        <script type="text/javascript" src="{% get_static_prefix %}js/jQuery.crossSelect-0.5.js"></script>
+        <script type="text/javascript" src="{% get_static_prefix %}js/jq_form.js"></script>
+        <script type="text/javascript" src="{% get_static_prefix %}js/hotkeys.js"></script>
+        <script type="text/javascript" src="{% get_static_prefix %}js/jstree/jquery.jstree.js"></script>
+        <script type="text/javascript" src="{% get_static_prefix %}js/jquery-ui-timepicker-addon.js"></script>
+        <script type="text/javascript" src="{% get_static_prefix %}js/jquery.simpleMultiSelect.js"></script>
+        <script type="text/javascript" src="{% get_static_prefix %}js/submenu.js"></script>
+        <script type="text/javascript" src="{% get_static_prefix %}js/jquery.titlealert.js"></script>
+        <script type="text/javascript" src="{% get_static_prefix %}js/jquery.titlealert.min.js"></script>
+        {% block head %}{% endblock %}
+    </head>
+    <body id="home">
+        <div id="mainContent">
+            <div id="header">
+                <div id="headerLogo">
+                    {% url SistemaMonitoreo.views.index as fallback_url %} <a href="{{ fallback_url }}"> <img src="{% get_static_prefix %}img/logo.png" alt="SOSELIMEX - Mantenimiento Integral y Limpieza"> </a>
+                </div>
+            </div>
+            
+            {% block message %}{% endblock %} <div class="clear"></div>
+            <div id="bodyContent">
+                <h1> {% block page_title %}{% endblock %} </h1>
+                <div id="bodyContent">
+                    <div class="columnType2">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <div id="footer">
+                {% block footer %}
+                SOSELIMEX
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>

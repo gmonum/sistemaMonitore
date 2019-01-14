@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-
+{% load mptt_tags %}
 <html>
 	<head>
 	
@@ -17,6 +16,9 @@
 	<script src="{% static "js/validation.js" %}"></script></head>
 	{% endblock %}
 	
+
+
+
 	<style type="text/css">
 	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,caption, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 	margin: 0;
@@ -756,7 +758,7 @@ ol, ul {
 	<em class="zf-important">*</em>
 	</label>
 	<div class="zf-tempContDiv">
-	
+	<!--
 	<select class="zf-form-sBox" name="Dropdown" checktype="c1" onChange="document.getElementById('id_ubicacion').value = this.options[this.selectedIndex].value" >
 	{% if ubicaciones|length != 1  %}
 	<option selected="true" value="-Select-" >-Select-</option>
@@ -776,6 +778,36 @@ ol, ul {
 	{% else %}
 		<input type="text" id="id_ubicacion" name="id_ubicacion" value="{{ubicaciones.0.pk}}"/>
 	{% endif %}
+-->
+	<tr>
+            <td> </td>
+            <td >
+               
+		<div id="dialogUbicacion" style="width:400px;height:500px">
+            <div id="selectUbicacion" >
+                    <ul class="root" id="tree1">
+                        {% recursetree ubicaciones %}
+                        <li id="l_{{ node.id }}" class="nTrue" >
+                            <span style="cursor: pointer">{{ node.name }}</span>
+                            {% if not node.is_leaf_node %}
+                            <ul style="margin-left:30px;cursor: pointer;">
+                                {{ children }}
+                            </ul>
+                            {% endif %}
+                        </li>
+                        {% endrecursetree %}
+                    </ul>
+                </div>
+                <div style="margin-top:30px;float:right"><button id="aceptUbicacion" class="boton-rojo">Aceptar</button></div>
+</div>
+            </td>
+        </tr>
+        <tr>
+            <td>{{ form.ubicacion.errors }} <label for="id_lugarCategory">Ubicacion </label></td>
+            <td> <a href="#dialogUbicacion" id="btnSelectUbicacion" >Click para seleccionar </a>
+            <div id="Ubicacionseleccionados"></div>
+            </td>
+        </tr>
 	<div class="zf-clearBoth"></div></li><!---------Dropdown Ends Here---------->
 	<!---------Time Starts Here----------> 
 	<li class="zf-tempFrmWrapper zf-time"><label class="zf-labelName">Inicio de Actividad

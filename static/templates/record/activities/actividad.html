@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}Monitor de Actividades{% endblock %}
+{% block page_title %}Iniciando una actividad{% endblock %}
+{% block head %}
+{% load mptt_tags %}
+{% endblock %}
+{% block message %}
+{% endblock %}
+{% block content %}
+
+<script type=”text/javascript”>
+function goodbye(e) {
+    if(!e) e = window.event;
+    //e.cancelBubble is supported by IE - this will kill the bubbling process.
+    e.cancelBubble = true;
+    e.returnValue = '¿Está seguro que desea salir de la página?'; //This is displayed on the dialog
+    //e.stopPropagation works in Firefox.
+    if (e.stopPropagation) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+}
+window.onbeforeunload=goodbye;
+</script>
+<script language="JavaScript">
+  var needToConfirm = true;
+  window.onbeforeunload = confirmExit;
+  function confirmExit()
+  {
+    if (needToConfirm)
+    {
+        return "";
+    }
+  }
+</script>
+<script>
+    $(document).ready(function() {
+        $('#btnSelectUbicacion').bind('click', function(e){
+                // e.preventDefault();
+                $("#dialogUbicacion").dialog({modal: true, width: 600, height:400, title:'Ubicaciones'});
+                $("#aceptUbicacion").live('click', function(e){
+                     e.preventDefault();
+                     $("#Ubicacionseleccionados").empty();
+                     $("#selectUbicacion .liSelected").each(function(j,b){
+                         id = $(b).parent().attr('id');
+                         var parents = $("#"+id).parents('.jstree-open');
+                         var breadcrumb = $("#"+id+" span").html();
+                         $.each(parents, function(i,a){
+                            nuevo = $("#"+a.id+" span").html();
+                            breadcrumb = nuevo+" > "+breadcrumb;
+                         });
+                         $("#Ubicacionseleccionados").append("<p>"+breadcrumb+"</p>");
+                     });
+                     $("#dialogUbicacion").dialog('close');
+                     $("#dialogUbicacion").dialog('destroy');
+                });
+        });
+       
+       
+        $("#idUbicacionArbolDisplay").bind('click', function() {
+            $('#selectLugares').toggle();
+        });
+        
+        $(".nTrue span").bind('click', function() {
+            id = $(this).parent().attr('id');
+            $(this).toggleClass("liSelected");
+            id2 = id.split('_');
+            id = id2[1];
+            if($(this).hasClass("liSelected") )
+                $("#id_ubicacionCategory option[value="+id+"]").attr("selected","selected");
+            else
+                $("#id_ubicacionCategory option[value="+id+"]").attr("selected",false);
+        });
+    
+        $('#selectLugares').jstree();
+    });
+</script>
+<div id="dialogUbicacion" style="display:none; width:400px;height:500px">
+            <div id="selectUbicacion" >
+                    <ul class="root" id="tree1">
+                        {% recursetree nodes %}
+                        <li id="l_{{ node.id }}" class="nTrue" >
+                            <span style="cursor: pointer">{{ node.name }}</span>
+                            {% if not node.is_leaf_node %}
+                            <ul style="margin-left:30px;cursor: pointer;">
+                                {{ children }}
+                            </ul>
+                            {% endif %}
+                        </li>
+                        {% endrecursetree %}
+                    </ul>
+                </div>
+                <div style="margin-top:30px;float:right"><button id="aceptUbicacion" class="boton-rojo">Aceptar</button></div>
+</div>
+
+<form action="{{ upload_url }}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table id="formulario">
+        
+        <tr style="display:none">
+            <td> </td>
+            <td >
+                {{ form.ubicacion }}
+            </td>
+        </tr>
+        <tr>
+            <td>{{ form.lugarCategory.errors }} <label for="id_lugarCategory">Ubicación:</label></td>
+            <td> <a href="#dialogUbicacion" id="btnSelectUbicacion" >Click para seleccionar </a>
+            <div id="lugaresseleccionados"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="tdEnviar">
+            <input id="submit" type="submit" value="Guardar" onclick="needToConfirm = false;">
+            {% csrf_token %}</td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

@@ -1,0 +1,161 @@
+body{
+  font-family: Arial;
+  font-size: 12px;
+  background: #FAFAFA url(img/bg-header.gif) repeat scroll center top;
+}
+
+
+
+#mainContent{
+  width: 1200px;
+  height: auto;
+  margin: 0 auto;
+  border: 1px solid #666666;
+  background: #FFFFFF;
+}
+#header{
+  width: 1200px;
+  height: 140px;
+  background: url(img/bg_header.jpg) no-repeat;
+    
+}
+#headerLogo{
+  float: left;
+  margin: 10px 0 0 30px;
+}
+
+#headerSubmenu{
+  float: right;
+  margin: 0 40px 0 0;
+  background: url(img/bg_hsubmenu.png) no-repeat;
+  width: 402px;
+  height: 60px;
+}
+#navBar{
+  background: url(img/bg_menu.png) no-repeat top center;
+  width: 1200px;
+  height: 60px;
+  text-align: center;
+}
+#mainMenu{
+  
+}
+#mainMenu li{
+  display: inline;
+  float: right;
+  margin-top: 20px;
+  padding: 0 10px;
+  width: 100px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+#bodyContent{
+  width: 1160px;
+  padding: 20px;
+  
+}
+#footer{
+  background: transparent url(img/bg_menu.png) repeat-x top center;
+  width: 1180px;
+  height: 14px;
+  padding: 7px 10px;
+  text-align: center;
+  color: #FFFFFF;
+}
+.borderRight{
+  border-right: 1px dotted #ffffff;
+}
+table#formulario{
+  margin: 0 auto;
+  border: 0;
+
+}
+table#formulario td{
+  padding:5px;
+
+}
+.labelForm{
+  text-align: right;
+}
+.tdEnviar{
+  text-align: right;
+}
+input, select{
+  border: 1px solid #E8141E;
+  background: transparent;
+  width: 200px;
+  height:20px;
+}
+input#submit{
+  background: #E8141E ;
+  color: #FFFFFF;
+  width: 70px;
+  height: 25px;
+}
+
+
+table#reporte{
+  margin: 0 auto;
+  border: 1px solid #E8141E;
+   padding: 0;
+}
+table#reporte th{
+  background: #E8141E;
+  color: #FFFFFF;
+  font-weight: bold;
+  border: 0px;
+  padding: 5px;
+  border: #E8141E;
+}
+table#reporte td{
+  border: 0px;
+  padding: 3px 5px;
+}
+
+a{
+  text-decoration: none;
+  color: #E8141E;
+}
+a:visited{
+  text-decoration: none;
+  color: #666666;
+}
+.paginador{
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+textarea{
+  border: 1px solid #E8141E;
+  width: 200px;
+  height: 60px;
+}
+.errorlist li{
+  color: #E8141E;
+  font-weight: bold;
+  padding-left: 10px;
+  list-style: square inside; 
+}
+
+
+#messagesArea{
+  background: url(img/bg_areamensajes.png) no-repeat;
+  width: 400px;
+  height: 20px;
+  padding: 3px 10px;
+  color: #ffffff;
+  float: right;
+  margin-right: 20px;
+  text-align: center;
+}
+.clear{
+  clear: both;
+}
+
+h1{
+  color: #000000;
+  font-size: 18px;
+  margin: 10px 0 20px 20px;
+
+}

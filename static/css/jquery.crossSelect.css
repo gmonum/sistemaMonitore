@@ -1,0 +1,98 @@
+/* ruler for measuring item width should be invisible */
+	.jqxs span 
+	{
+		visibility:none;
+		position:absolute;
+	}
+	
+	.jqxs ul, 
+	.jqxs div
+	{
+		float:left;
+		margin:0px;
+		padding:0;
+		
+	}
+	
+	/* ie6 fix for float margin bug */
+	* html .jqxs ul, 
+	* html .jqxs div
+	{
+		margin:4px 2px;
+	}
+	
+	.jqxs ul
+	{
+		border:2px inset #dddddd;
+		/*border-top: none;*/
+		overflow: auto;
+		margin-top: 2px;
+	}
+	
+	.jqxs ul, 
+	.jqxs li 
+	{
+		padding:0;
+		list-style:none;
+		text-indent:0;
+
+	}
+	
+	.jqxs li 
+	{
+		padding:  2px;
+		color:black;
+		background:white;
+		margin:0;
+		cursor: pointer;
+		overflow:hidden;
+	}
+	
+	.jqxs li span 
+	{
+		display:none;
+	}
+	
+	.jqxs_optionsList li.jqxs_selected
+	{
+		display:none;
+	} 
+	
+	.jqxs li.jqxs_focused 
+	{
+		color:white; 
+		background:  #E8141E;
+	}
+	
+	.jqxs input 
+	{
+	    height: 19px;
+	    border: 0px;
+	    margin:5px;
+		width:19px;
+		display:block;
+		color: #ffffff;
+	}
+	.jqxs h3{
+		height: 20px;
+	   font-size: 13px;
+	   padding: 5px 0 0 15px;
+	   background: transparent url(img/bkg-grid-title.png) repeat-x;
+	   border: 1px solid #dddddd;
+	 
+	}
+	.jqxs_buttons{
+		
+	}
+	.jqxs_selectButton {
+		margin-top: 25px;
+		background: transparent url(img/double_arrowRight.png) no-repeat;
+	 }
+	.jqxs_removeButton{
+		background: transparent url(img/double_arrowLeft.png) no-repeat;
+	}
+	/* not used in default style, but useful for applying custom button designs */
+	.jqxs input.jqxs_active
+	{
+	
+	}
