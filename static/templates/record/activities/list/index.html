@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 	<meta name="_csrf" content="${_csrf.token}"/>
 	<!-- default header name is X-CSRF-TOKEN -->
 	<meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -118,13 +117,20 @@
 	<title>Listado de Bitacora</title>
 </head>
 <body>
-	
-	<h1>Actividades por finalizar</h1>
+	{% if consulta is True %}
+		<h1>Consulta de Actividades</h1>
+	{% else %}
+		<h1>Actividades por finalizar</h1>
+	{% endif %} 
 	
 	<ul class="rolldown-list" id="myList">
 		{% for st in bitacora %}
 			<li value="{{ st.pk }}" >
-			<a href="/finalizaActividad/{{ st.pk }}/">ID: {{ st.pk }} - Fecha inicio: {{st.fecha_hora_inicio }} HRS</a>
+				{% if consulta is True %}
+					<a href="/consultaActividad/{{ st.pk }}/">ID: {{ st.pk }} - Fecha inicio: {{st.fecha_hora_inicio }} HRS</a>
+				{% else %}
+					<a href="/finalizaActividad/{{ st.pk }}/">ID: {{ st.pk }} - Fecha inicio: {{st.fecha_hora_inicio }} HRS</a>
+				{% endif %} 
 			</li>
 			<br>
 		{% endfor %}
@@ -132,6 +138,5 @@
 	<a href="/">
 		<button id="btnReload">REGRESAR</button>
 	</a>
-	
 </body>
 </html>
