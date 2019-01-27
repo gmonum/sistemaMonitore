@@ -123,8 +123,12 @@
   
   <section>
     
+    
     <header>MENU PRINCIPAL</header>
     <article><a href="/capturaActividades">Iniciar Actividad</a></article>
+    {% if request.user.is_staff %}
+    	<article><a href="/listaTodasActividades">Listar Actividades</a></article>
+    {% endif %}
     <article><a href="/listadoActividades">Finalizar Actividad</a></article>
     
     <footer><a href='/logout'>SALIR</a></footer>
