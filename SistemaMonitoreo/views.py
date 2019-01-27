@@ -36,7 +36,9 @@ def user_profile(request):
          return HttpResponseRedirect('/login')
      else:
          #request.session['logged_in'] = True
-         logger.info("Usuario registrado: " + User.objects.get(id=request.session['_auth_user_id']).__str__()) 
+         profile = request.user.is_staff
+         logger.info('Usuario registrado: ' + User.objects.get(id=request.session['_auth_user_id']).__str__())
+         logger.info('El Perfil del usuario es de staff: ' + profile.__str__()) 
          #logger.info()
          logger.info(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
          return TemplateResponse(request,'accounts/profile/index.html')
@@ -54,7 +56,8 @@ def duty_record(request):
                                     {
                                     'form':form,
                                     'actividades': Actividad.objects.all(),
-                                    'ubicaciones': Ubicacion.objects.all()})
+                                    'ubicaciones': emp_ubicacion.all(),
+                                    'inicia': True})
          #return TemplateResponse(request, 'record/activities/index.html', '')
 def duty_record2(request):
      logger = logging.getLogger('SistemaMonitoreo')
@@ -71,9 +74,30 @@ def duty_record2(request):
                                     'actividades': Actividad.objects.all(),
                                     'nodes': Ubicacion.objects.all() })
          #return TemplateResponse(request, 'record/activities/index.html', '')
-def save_update_activity(request, id):
+
+def duty_record_finalize(request, id):
      logger = logging.getLogger('SistemaMonitoreo')
      
+     id_sent = id
+     if not '_auth_user_id' in request.session:
+         return HttpResponseRedirect('/login')
+     else:
+         logger.info('El id que quiere finalizar es: ' + id_sent.__str__())
+         logger.info('El id_empleado del la bitacora es: ' + Bitacora.objects.get(id=id_sent).empleado_id.__str__())
+         logger.info('El id_ubicacion de la bitacora es: ' + Bitacora.objects.get(id=id_sent).ubicacion_id.__str__())
+     
+         actividad_selecc = Bitacora.objects.get(id=id_sent).actividades
+     return render(request, 'record/activities/index.html',
+                                    {'bitacora': Bitacora.objects.filter(id=id_sent),
+                                     'actividad': actividad_selecc.all(),
+                                     'empleado': Empleado.objects.filter(id=Bitacora.objects.get(id=id_sent).empleado_id),
+                                     'ubicacion': Ubicacion.objects.filter(id=Bitacora.objects.get(id=id_sent).ubicacion_id),
+                                     'id': id_sent,
+                                     'finaliza': True })
+
+
+def save_update_activity(request, id):
+     logger = logging.getLogger('SistemaMonitoreo')
      
      logger.info('El id ingresado es: ' + id.__str__())
      
@@ -99,14 +123,14 @@ def save_update_activity(request, id):
          logger.info('La hora html: ' + hora_ini)
          logger.info('Hora actual: ' +  timezone.now().__str__())
          logger.info('La actividad seleccionada es: ' + actividad_sel)
-         logger.info('La actividad sera: ' + Actividad.objects.get(id=actividad_sel).__str__())
+         logger.info(u'La actividad sera: ' + Actividad.objects.get(id=actividad_sel).__str__().decode('utf-8'))
          logger.info('La ubicacion seleccionada es: ' + ubicacion_sel)
-         logger.info('La ubicacion sera: ' + Ubicacion.objects.get(id=ubicacion_sel).__str__())
+         logger.info('La ubicacion sera: ' + Ubicacion.objects.get(id=ubicacion_sel).__str__().decode('utf-8'))
          
          bitacora = Bitacora()
          bitacora.fecha_hora_inicio = timezone.now()
          bitacora.ubicacion = request.session.pop('ubicacion')
-         logger.info('El empleado sera: ' + request.session['empleado'].__str__())
+         logger.info('El empleado sera: ' + request.session['empleado'].__str__().decode('utf-8'))
          bitacora.empleado = request.session.pop('empleado')
          bitacora.save()
          logger.info('El id de la bitacora es: ' + bitacora.pk.__str__())
@@ -124,14 +148,41 @@ def save_update_activity(request, id):
          return HttpResponseRedirect('/')
          #return TemplateResponse(request,'accounts/profile/index.html')
 
-
-def listado_actividades(request):
+def listado_user_actividades(request):
      logger = logging.getLogger('SistemaMonitoreo')
      if not '_auth_user_id' in request.session:
          return HttpResponseRedirect('/login')
      else:
          return render(request, 'record/activities/list/index.html',
                                     {'bitacora': Bitacora.objects.filter(empleado_id=Empleado.objects.get(user_id=User.objects.get(id=request.session['_auth_user_id']))).filter(fecha_hora_fin=None)})
+
+def listado_todas_actividades(request):
+     logger = logging.getLogger('SistemaMonitoreo')
+     if not '_auth_user_id' in request.session:
+         return HttpResponseRedirect('/login')
+     else:
+         return render(request, 'record/activities/list/index.html',
+                                    {'bitacora': Bitacora.objects.all(),
+                                     'consulta': True})
+def duty_record_review(request, id):
+     logger = logging.getLogger('SistemaMonitoreo')
+     
+     id_sent = id
+     if not '_auth_user_id' in request.session:
+         return HttpResponseRedirect('/login')
+     else:
+         logger.info('El id que quiere revisar es: ' + id_sent.__str__())
+         logger.info('El id_empleado del la bitacora es: ' + Bitacora.objects.get(id=id_sent).empleado_id.__str__())
+         logger.info('El id_ubicacion de la bitacora es: ' + Bitacora.objects.get(id=id_sent).ubicacion_id.__str__())
+     
+         actividad_selecc = Bitacora.objects.get(id=id_sent).actividades
+     return render(request, 'record/activities/review/index.html',
+                                    {'bitacora': Bitacora.objects.filter(id=id_sent),
+                                     'actividad': actividad_selecc.all(),
+                                     'empleado': Empleado.objects.filter(id=Bitacora.objects.get(id=id_sent).empleado_id),
+                                     'ubicacion': Ubicacion.objects.filter(id=Bitacora.objects.get(id=id_sent).ubicacion_id),
+                                     'id': id_sent,
+                                     'visualiza': True })
 
 def duty_record_fin(request, id):
      logger = logging.getLogger('SistemaMonitoreo')
