@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from mptt.models import MPTTModel
+from mptt.models import MPTTModel, TreeForeignKey
 from django.contrib import admin
 from model_utils import Choices
 from django.contrib.auth.models import User
@@ -14,7 +14,7 @@ from datetime import datetime
 # Create your models here.
 
 class Ubicacion(MPTTModel):
-    parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
     es_empresa = models.BooleanField
     nombre = models.TextField(null=False, blank=True)
     direccion = models.TextField(null=False, blank=True)
@@ -28,7 +28,7 @@ class Ubicacion(MPTTModel):
         verbose_name_plural = 'ubicaciones'
 
 class Insumo(models.Model):
-    empresa = models.ForeignKey(Ubicacion,null=False)
+    empresa = models.ForeignKey(Ubicacion,null=False, on_delete=models.CASCADE)
     stock_maximo = models.FloatField(null=False,  default=0.0)
     stock_minimo = models.FloatField(null=False,  default=0.0)
     nombre = models.CharField(max_length=30, null=False, blank=True)

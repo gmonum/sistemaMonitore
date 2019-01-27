@@ -23,14 +23,78 @@
         <script type="text/javascript" src="{% get_static_prefix %}js/jquery.titlealert.min.js"></script>
         {% block head %}{% endblock %}
     </head>
+
     <body id="home">
         <div id="mainContent">
             <div id="header">
                 <div id="headerLogo">
-                    {% url SistemaMonitoreo.views.index as fallback_url %} <a href="{{ fallback_url }}"> <img src="{% get_static_prefix %}img/logo.png" alt="SOSELIMEX - Mantenimiento Integral y Limpieza"> </a>
+                    {% url AccTickets.views.index as fallback_url %} <a href="{{ fallback_url }}"> <img src="{% get_static_prefix %}img/logo.png" alt="SOSELIMEX"> </a>
+                </div>
+                <div id="headerSubmenu">
+                    <div id="welcome">
+                        Bienvenido {{ request.user.username }}
+                    </div>
+                    <div >
+                        <span class="welmenu" id="close"> <a href="/accounts/logout/">Cerrar sesion</a> </span>
+                        {% if user.is_superuser %} <span class="welmenu" id="advance" > <a href="/admin/">Opciones avanzadas</a> </span>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-            
+            <div id="navBar">
+                <ul id="backMenu">
+                    <li class="borderRight">
+                    {% block back %} {% endblock %}
+                    </li>
+                </ul>
+                <ul id="mainMenu">
+                    {% if not user.is_staff and perms.AccTickets.add_suceso %}
+                    <li class="borderRight">
+                        <a href="/AccTickets/suceso/crear/">Reportar Suceso</a>
+                    </li>
+                    {% endif %}
+          {% if user.is_superuser %}
+               <li class="borderRight">
+                              <a href="/AccTickets/suceso/crear/">Reportar Suceso</a>
+                         </li>
+          {% endif %}
+                    {% if perms.AccTickets.ver_reportes %}
+                    <li class="borderRight" id="reportes">
+                        <a href="#">Reportes</a>
+                    </li>
+                    {% endif %}
+                    {% if user.is_staff %}
+                    <li class="borderRight" id="otcau">
+                        <a href="#">Órden de Trabajo CAU</a>
+                    </li>
+                    {% endif %}
+                    {% if perms.AccTickets.ver_planos %}
+                    <li class="borderRight" id="planos">
+                        <a href="/AccTickets/planos/">Planos</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <ul id="mainSubmenu">
+                    {% url AccTickets.views.reportes  as fallback_urlreportes %}
+                    <li class="lisubmenu">
+                        <a href="{{ fallback_urlreportes }}">Reporte Condensado</a>
+                    </li>
+                    <li class="lisubmenu">
+                        ::
+                    </li>
+                    <li class="lisubmenu" >
+                        <a href="AccTickets/reporteUsuarios/">Reporte servicios por usuario</a>
+                    </li>
+                </ul>
+                <ul id="mainSubmenuCAU">
+                    {% if user.is_staff or perms.AccTickets.add_suceso_CAU  %}
+                    {% url AccTickets.views.reportes  as fallback_urlreportes %}
+                    <li class="lisubmenu">
+                        <a href="/AccTickets/otcau/crear/1/">Crear órdenes de trabajo</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
             {% block message %}{% endblock %} <div class="clear"></div>
             <div id="bodyContent">
                 <h1> {% block page_title %}{% endblock %} </h1>

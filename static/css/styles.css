@@ -392,7 +392,7 @@ h1{
 .liSelected{
 		background: #dddddd;
 	}
-#selectLugares, #selectEstandares, #selectservicio{
+#selectUbicacion, #selectEstandares, #selectservicio{
 	/*display:none; */
 	border: 1px solid #dddddd;
 	height: auto;left: 0; 
@@ -406,7 +406,7 @@ h1{
     width: auto;
     z-index: 99999;	
 }
-#idLugarArbolDisplay, #idEstandarArbolDisplay,#idservicioArbolDisplay {
+#idUbicacionArbolDisplay, #idEstandarArbolDisplay,#idservicioArbolDisplay {
 	background: url(img/222222_7x7_arrow_down.gif) no-repeat;
 	background-position: 485px;
 }

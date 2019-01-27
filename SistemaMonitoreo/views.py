@@ -69,7 +69,7 @@ def duty_record2(request):
                                     {
                                     'form':form,
                                     'actividades': Actividad.objects.all(),
-                                    'nodes': Ubicacion.objects.get(pk=1).get_leafnodes() })
+                                    'nodes': Ubicacion.objects.all() })
          #return TemplateResponse(request, 'record/activities/index.html', '')
 def save_update_activity(request, id):
      logger = logging.getLogger('SistemaMonitoreo')

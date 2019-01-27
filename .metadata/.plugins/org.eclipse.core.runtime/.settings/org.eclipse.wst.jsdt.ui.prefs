@@ -1,0 +1,5 @@
+AbstractTextEditor.Color.Background.SystemDefault=true
+AbstractTextEditor.Color.Foreground.SystemDefault=true
+AbstractTextEditor.Color.SelectionForeground.SystemDefault=true
+content_assist_add_import=true
+eclipse.preferences.version=1

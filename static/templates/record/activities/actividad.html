@@ -8,7 +8,7 @@
 {% endblock %}
 {% block content %}
 
-<script type=”text/javascript”>
+<script type="text/javascript">
 function goodbye(e) {
     if(!e) e = window.event;
     //e.cancelBubble is supported by IE - this will kill the bubbling process.
@@ -80,7 +80,7 @@ window.onbeforeunload=goodbye;
                     <ul class="root" id="tree1">
                         {% recursetree nodes %}
                         <li id="l_{{ node.id }}" class="nTrue" >
-                            <span style="cursor: pointer">{{ node.name }}</span>
+                            <span style="cursor: pointer">{{ node.nombre }}</span>
                             {% if not node.is_leaf_node %}
                             <ul style="margin-left:30px;cursor: pointer;">
                                 {{ children }}
@@ -96,7 +96,15 @@ window.onbeforeunload=goodbye;
 <form action="{{ upload_url }}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <table id="formulario">
-        
+        <tr>
+            <td>
+               <label for="id_actividad">Actividad:</label> 
+            </td>
+            <td>
+                {{ form.actividades}}
+            </td>
+            
+        </tr>
         <tr style="display:none">
             <td> </td>
             <td >
@@ -105,13 +113,25 @@ window.onbeforeunload=goodbye;
         </tr>
         <tr>
             <td>{{ form.lugarCategory.errors }} <label for="id_lugarCategory">Ubicación:</label></td>
-            <td> <a href="#dialogUbicacion" id="btnSelectUbicacion" >Click para seleccionar </a>
-            <div id="lugaresseleccionados"></div>
+            <td> <div id="selectUbicacion" >
+                    <ul class="root" id="tree1">
+                        {% recursetree nodes %}
+                        <li id="l_{{ node.id }}" class="nTrue" >
+                            <span style="cursor: pointer">{{ node.nombre }}</span>
+                            {% if not node.is_leaf_node %}
+                            <ul style="margin-left:30px;cursor: pointer;">
+                                {{ children }}
+                            </ul>
+                            {% endif %}
+                        </li>
+                        {% endrecursetree %}
+                    </ul>
+                </div>
             </td>
         </tr>
         <tr>
             <td colspan="2" class="tdEnviar">
-            <input id="submit" type="submit" value="Guardar" onclick="needToConfirm = false;">
+            <input id="submit" type="submit" value="Iniciar actividad" onclick="needToConfirm = false;">
             {% csrf_token %}</td>
         </tr>
     </table>

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'SistemaMonitoreo',
+    'mptt',
 ]
 
 MIDDLEWARE = [
@@ -171,12 +172,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = 'https://storage.googleapis.com/sistema-monitoreo-rrr/static/'
+#STATIC_URL = 'https://storage.googleapis.com/sistema-monitoreo-rrr/static/'
+STATIC_URL = '/Users/gnunez/eclipse-workspace/sistemaMonitoreo/sistemaMonitoreo/static/'
 STATIC_ROOT = "/static/"
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'multimediasistemamonitoreorrr'
-
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
