@@ -1,4 +1,5 @@
-{% load mptt_tags %}
+<!DOCTYPE html>
+
 <html>
 	<head>
 	
@@ -16,9 +17,6 @@
 	<script src="{% static "js/validation.js" %}"></script></head>
 	{% endblock %}
 	
-
-
-
 	<style type="text/css">
 	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,caption, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 	margin: 0;
@@ -716,7 +714,12 @@ ol, ul {
 	
 	<body class="zf-backgroundBg"><!-- Change or deletion of the name attributes in the input tag will lead to empty values on record submission-->
 	<div class="zf-templateWidth">
-	<form action='/guardaActividad/submit/0/' name='form' method='POST' onSubmit='javascript:document.charset="UTF-8";' accept-charset='UTF-8' enctype='multipart/form-data' id='form'>{% csrf_token %}
+	{% if inicia is True %}
+		<form action='/guardaActividad/submit/0/' name='form' method='POST' onSubmit='javascript:document.charset="UTF-8";' accept-charset='UTF-8' enctype='multipart/form-data' id='form'>{% csrf_token %}
+	{% elif finaliza is True%}
+		<form action='/guardaActividad/submit/{{id}}/' name='form' method='POST' onSubmit='javascript:document.charset="UTF-8";' accept-charset='UTF-8' enctype='multipart/form-data' id='form'>{% csrf_token %}
+	{% endif %} 
+	
 	<input type="hidden" name="zf_referrer_name" value="">
 	<input type="hidden" name="zf_redirect_url" value="">
 	<input type="hidden" name="zc_gad" value="">
@@ -733,107 +736,108 @@ ol, ul {
 	
 	<!--  <span class="zf-last"> <input type="text" maxlength="255" invlovedinsalesiq=false fieldType=7 name="Name_Last" checktype="c1"/><label>Apellido</label> </span> -->
 	<div class="zf-clearBoth"></div></div><p id="Name_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
-	</div><div class="zf-clearBoth"></div></li><!---------Name Ends Here----------> 
+	</div><div class="zf-clearBoth"></div></li>
+	<!---------Name Ends Here---------->
+	
 	<!---------Dropdown Starts Here---------->
 	<li class="zf-tempFrmWrapper zf-small"><label class="zf-labelName">Actividades
 	<em class="zf-important">*</em>
 	</label>
 	<div class="zf-tempContDiv">
-	
+	 
 	<select class="zf-form-sBox" name="Dropdown" checktype="c1" onChange="document.getElementById('id_actividad').value = this.options[this.selectedIndex].value " >
-	<option selected="true" value="-Select-" >-Select-</option>
-	{% for st in actividades %}
-		<option value="{{ st.pk }}" >
-		{{ st.nombre_actividad }}
+	
+	{% if inicia is True %}
+		<option selected="true" value="-Select-" >-Select-</option>
+		{% for st in actividades %}
+			<option value="{{ st.pk }}" >
+				{{ st.nombre_actividad }}
+			</option>
+		{% endfor %}
+
+	{% elif finaliza is True%}
+		
+		<option value="{{ actividad.0.pk }}" >
+			{{ actividad.0.nombre_actividad }}
 		</option>
-	{% endfor %}
+		
+	{% endif %}
 	</select>
 	<p id="Dropdown_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
 	</div>
 	<br>
-	<input type="text" id="id_actividad" name="id_actividad" style="visibility:hidden"/>
+	{% if inicia is True %}
+		<input type="text" id="id_actividad" name="id_actividad" style="visibility:hidden"/>
+	{% elif finaliza is True%}
+		<input type="text" id="id_actividad" name="id_actividad" value="{{actividad.0.pk}}" style="visibility:hidden"/>
+	{% endif %} 
+	
 	<div class="zf-clearBoth"></div></li><!---------Dropdown Ends Here---------->
 	<!---------Dropdown Starts Here---------->
 	<li class="zf-tempFrmWrapper zf-small"><label class="zf-labelName">Ubicación
 	<em class="zf-important">*</em>
 	</label>
 	<div class="zf-tempContDiv">
-	<!--
-	<select class="zf-form-sBox" name="Dropdown" checktype="c1" onChange="document.getElementById('id_ubicacion').value = this.options[this.selectedIndex].value" >
-	{% if ubicaciones|length != 1  %}
-	<option selected="true" value="-Select-" >-Select-</option>
-	{% endif %}
 	
-	{% for rt in ubicaciones %}
-		<option value="{{ rt.pk }}" >
-		{{ rt.nombre }}
+	<select class="zf-form-sBox" name="Dropdown" checktype="c1" onChange="document.getElementById('id_ubicacion').value = this.options[this.selectedIndex].value" >
+	{% if inicia is True %}
+		{% if ubicaciones|length != 1  %}
+		<option selected="true" value="-Select-" >-Select-</option>
+		{% endif %}
+		
+		{% for rt in ubicaciones %}
+			<option value="{{ rt.pk }}" >
+			{{ rt.nombre }}
+			</option>
+		{% endfor %}
+	{% elif finaliza is True%}
+		
+		<option value="{{ ubicacion.0.pk }}" >
+			{{ ubicacion.0.nombre }}
 		</option>
-	{% endfor %}
+		
+	{% endif %} 
+	
+	
+	
 	</select>
 	<p id="Dropdown_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
 	</div>
 	<br>
-	{% if ubicaciones|length != 1  %}
-		<input type="text" id="id_ubicacion" name="id_ubicacion" />
-	{% else %}
-		<input type="text" id="id_ubicacion" name="id_ubicacion" value="{{ubicaciones.0.pk}}"/>
-	{% endif %}
--->
-	<tr>
-            <td> </td>
-            <td >
-               
-		<div id="dialogUbicacion" style="width:400px;height:500px">
-            <div id="selectUbicacion" >
-                    <ul class="root" id="tree1">
-                        {% recursetree ubicaciones %}
-                        <li id="l_{{ node.id }}" class="nTrue" >
-                            <span style="cursor: pointer">{{ node.name }}</span>
-                            {% if not node.is_leaf_node %}
-                            <ul style="margin-left:30px;cursor: pointer;">
-                                {{ children }}
-                            </ul>
-                            {% endif %}
-                        </li>
-                        {% endrecursetree %}
-                    </ul>
-                </div>
-                <div style="margin-top:30px;float:right"><button id="aceptUbicacion" class="boton-rojo">Aceptar</button></div>
-</div>
-            </td>
-        </tr>
-        <tr>
-            <td>{{ form.ubicacion.errors }} <label for="id_lugarCategory">Ubicacion </label></td>
-            <td> <a href="#dialogUbicacion" id="btnSelectUbicacion" >Click para seleccionar </a>
-            <div id="Ubicacionseleccionados"></div>
-            </td>
-        </tr>
+	{% if inicia is True %}
+		{% if ubicaciones|length != 1  %}
+			<input type="text" id="id_ubicacion" name="id_ubicacion" style="visibility:hidden"/>
+		{% else %}
+			<input type="text" id="id_ubicacion" name="id_ubicacion" value="{{ubicaciones.0.pk}}" style="visibility:hidden"/>
+		{% endif %}
+	{% elif finaliza is True%}
+		<input type="text" id="id_ubicacion" name="id_ubicacion" value="{{ubicacion.0.pk}}" style="visibility:hidden"/>
+	{% endif %} 
+	
 	<div class="zf-clearBoth"></div></li><!---------Dropdown Ends Here---------->
-	<!---------Time Starts Here----------> 
-	<li class="zf-tempFrmWrapper zf-time"><label class="zf-labelName">Inicio de Actividad
-	<em class="zf-important">*</em>
-	</label>
-	<span><button type="button" class="zf-submitColor"  onclick="var d = new Date(); document.getElementById('time_ini').value = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '.' + d.getMilliseconds() " >Iniciar Actividad</button></span><br><br>
-	<input type="text" id="time_ini" name="time_ini" readonly/>
-	<!-- type="button" -->
-	<!---------Time Ends Here----------></li> 
-	 
-	<!---------Time Starts Here----------> 
-	<!--
-	<li class="zf-tempFrmWrapper zf-time"><label class="zf-labelName">Fin de Actividad
-	<em class="zf-important">*</em>
-	</label>
-	<span>
-	{% if  not 'id_actividad' in request.session %}
-		<button type="button"   onclick="var d = new Date(); document.getElementById('time_fin').value = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '.' + d.getMilliseconds() " disabled >Finalizar Actividad</button>
-	{% else %}
-        <button type="button" class="zf-submitColor"  onclick="var d = new Date(); document.getElementById('time_fin').value = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '.' + d.getMilliseconds() " >Finalizar Actividad</button>
-	{% endif %}
-	</span><br><br>
-	<input type="text" id="time_fin" name="time_fin" readonly/>
-	 -->
-	<!---------Time Ends Here----------></li>
-	 
+	{% if inicia is True %}
+		<!---------Time Starts Here----------> 
+		<li class="zf-tempFrmWrapper zf-time"><label class="zf-labelName">Inicio de Actividad
+		<em class="zf-important">*</em>
+		</label>
+		<span><button type="button" class="zf-submitColor"  onclick="var d = new Date(); document.getElementById('time_ini').value = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '.' + d.getMilliseconds() " >Iniciar Actividad</button></span><br><br>
+		<input type="text" id="time_ini" name="time_ini" readonly/>
+		<!-- type="button" -->
+		<!---------Time Ends Here----------></li> 
+	{% elif finaliza is True%}
+		<!---------Time Starts Here----------> 
+		<li class="zf-tempFrmWrapper zf-time"><label class="zf-labelName">Fin de Actividad
+		<em class="zf-important">*</em>
+		</label>
+		<span>
+		
+		<button type="button" class="zf-submitColor"  onclick="var d = new Date(); document.getElementById('time_fin').value = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '.' + d.getMilliseconds() " >Finalizar Actividad</button>
+		
+		</span><br><br>
+		<input type="text" id="time_fin" name="time_fin" readonly/>
+		<!---------Time Ends Here----------></li>
+	{% endif %} 
+	
 	<!---------Multiple Line Starts Here---------->
 	<!-- 
 	<li class="zf-tempFrmWrapper zf-small"><label class="zf-labelName">Observaciones de la Actividad 
@@ -850,5 +854,4 @@ ol, ul {
 	var isSalesIQIntegrationEnabled = false;</script>
 
 </body>
-
 </html>
