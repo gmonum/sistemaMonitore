@@ -45,7 +45,6 @@ def user_profile(request):
 
 def duty_record(request):
      logger = logging.getLogger('SistemaMonitoreo')
-     form = BitacoraForm(request.POST, request.FILES)
      if not '_auth_user_id' in request.session:
          return HttpResponseRedirect('/login')
      else:
@@ -53,12 +52,11 @@ def duty_record(request):
          logger.info(empl_id)
          emp_ubicacion = Empleado.objects.get(user_id=request.session['_auth_user_id']).empresa
          return render(request, 'record/activities/index.html',
-                                    {
-                                    'form':form,
-                                    'actividades': Actividad.objects.all(),
-                                    'ubicaciones': emp_ubicacion.all(),
-                                    'inicia': True})
+                                    {'actividades': Actividad.objects.all(),
+                                     'ubicaciones': emp_ubicacion.all(),
+                                     'inicia': True})
          #return TemplateResponse(request, 'record/activities/index.html', '')
+         
 def duty_record2(request):
      logger = logging.getLogger('SistemaMonitoreo')
      form = BitacoraForm(request.POST, request.FILES)
