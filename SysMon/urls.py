@@ -29,8 +29,10 @@ urlpatterns = [
     url(r'^accounts/profile/$', views.user_profile),
     url(r'^capturaActividades/', views.duty_record),
     url(r'^guardaActividad/submit/(?P<id>\d+)/$', views.save_update_activity),
-    url(r'^listadoActividades/', views.listado_actividades),
-    url(r'^finalizaActividad/(?P<id>\d+)/$', views.save_update_activity),
+    url(r'^listadoActividades/', views.listado_user_actividades),
+    url(r'^finalizaActividad/(?P<id>\d+)/$', views.duty_record_finalize),
+    url(r'^listaTodasActividades/', views.listado_todas_actividades),
+    url(r'^consultaActividad/(?P<id>\d+)/$', views.duty_record_review),
     url(r'^iniciaActividad/', views.duty_record2),
        
 ]
